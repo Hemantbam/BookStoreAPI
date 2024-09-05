@@ -6,10 +6,10 @@ const port = 8080;
 import fs from "fs";
 app.use(express.json()); //accept the data in json format from clint side
 
-let bookData = [];
-let newId = 1;
+//-------------------------------------------------------------------------------
 
 /**Add a new book to store */
+
 app.post("/books", auth, async (req, res) => {
   const { name, category, author, price } = req.body;
   console.log(req.body);
@@ -26,7 +26,10 @@ app.post("/books", auth, async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------------------------
+
 /**Shows all the book that are available in store */
+
 app.get("/books", async (req, res) => {
   try {
     const [db_getBookDetails] = await db.query("Select * from book_Details");
@@ -40,7 +43,10 @@ app.get("/books", async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------------------------
+
 /**Show the details of the book with the specified id */
+
 app.get("/books/:id", async (req, res) => {
   const bookID = parseInt(req.params.id);
   try {
@@ -58,7 +64,10 @@ app.get("/books/:id", async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------------------------
+
 /**Update the details of books that are available in store */
+
 app.put("/books/:id", auth, async (req, res) => {
   const book_ID = parseInt(req.params.id);
   const { name, category, author, price } = req.body;
@@ -69,13 +78,16 @@ app.put("/books/:id", auth, async (req, res) => {
     );
     res
       .status(200)
-      .send(`Book Details updated with ${[JSON.stringify(req.body)]}`);
+      .send(`Book Details updated with ${JSON.stringify(req.body)}`);
   } catch (err) {
     res.status(404).send("Book not found :(");
   }
 });
 
+//-------------------------------------------------------------------------------
+
 /** Remove the book from the store */
+
 app.delete("/books/:id", auth, async (req, res) => {
   const book_ID = parseInt(req.params.id);
   try {
@@ -87,7 +99,10 @@ app.delete("/books/:id", auth, async (req, res) => {
   }
 });
 
+//-------------------------------------------------------------------------------
+
 /** A middleware to authenticate the admin user and authorize the post,put,delete functionality only to the user admin */
+
 function auth(req, res, next) {
   if (req.query.user == "admin") {
     console.log("Admin authentication sucessfull :)");
@@ -99,27 +114,27 @@ function auth(req, res, next) {
 }
 
 /**Function to add the data to the file when the admin add the book */
-function addDataToFile(bookDetails) {
-  // const fileData = JSON.stringify(bookDetails, null, 3);
-  fs.writeFile("bookList.txt", [bookDetails], (err) => {
-    if (err) {
-      console.log("error");
-    } else {
-      console.log("File created");
-    }
-  });
-}
+// function addDataToFile(bookDetails) {
+//   // const fileData = JSON.stringify(bookDetails, null, 3);
+//   fs.writeFile("bookList.txt", [bookDetails], (err) => {
+//     if (err) {
+//       console.log("error");
+//     } else {
+//       console.log("File created");
+//     }
+//   });
+// }
 
-/**Function to add the data to the txt file when the book details are updated */
-function updateFileData(book_Id_Details) {
-  // const fileData = JSON.stringify(book_Id_Details, null, 3);
-  fs.appendFile("bookList.txt", book_Id_Details, (err) => {
-    if (err) {
-      console.log("Error");
-    } else {
-      console.log("File edited");
-    }
-  });
-}
+// /**Function to add the data to the txt file when the book details are updated */
+// function updateFileData(book_Id_Details) {
+//   // const fileData = JSON.stringify(book_Id_Details, null, 3);
+//   fs.appendFile("bookList.txt", book_Id_Details, (err) => {
+//     if (err) {
+//       console.log("Error");
+//     } else {
+//       console.log("File edited");
+//     }
+//   });
+// }
 
 app.listen(port);
