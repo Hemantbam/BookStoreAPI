@@ -1,9 +1,0 @@
-{
-   "id": 1
-}{
-   "id": 1,
-   "name": "Book One",
-   "category": "Fiction",
-   "author": "Author A",
-   "price": "10"
-}
