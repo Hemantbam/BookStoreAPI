@@ -39,7 +39,6 @@ app.post("/books", auth, async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       status: "500",
       message: "An Unexpected Error occured",
@@ -143,7 +142,6 @@ app.put("/books/:id", auth, async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       status: "500",
       message: "An Unexpected Error occured",
