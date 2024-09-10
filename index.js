@@ -1,6 +1,6 @@
 import express, { json } from "express";
-import db from "./dbConn.js";
-import auth from "./authMiddleware.js";
+import db from "./config/dbConn.js";
+import auth from "./middleware/authentication.js";
 const app = express();
 const port = 8080;
 app.use(express.json());
